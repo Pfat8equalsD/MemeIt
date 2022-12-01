@@ -4,5 +4,34 @@
 	height: 100px;
 	left: 0px;
 	top: 0px;
-	background-color: blueviolet;
+	background-color: #F5F5F5;
+}
+
+.logo{
+position: absolute;
+width: 197px;
+height: 56px;
+left: 45px;
+top: 50px;
+
+background: url("img/LOGO.png");
+}
+
+.navbutton{
+	
+position: absolute;
+right: 99px;
+top: 66px;
+
+font-family: 'Merriweather';
+font-style: normal;
+font-weight: 300;
+font-size: 20px;
+line-height: 25px;
+
+color: #06114F;
+}
+
+.navlogin{
+	right: 232px;
 }
