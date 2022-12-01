@@ -1,8 +1,18 @@
-import logo from './logo.svg';
-
+import React from 'react';
+import Navbar from './Navbar';
+import "./App.css"
 
 function App() {
-  return null
+  return (
+    <>
+      <header><Navbar /></header>
+      <p>LLLL</p>
+      <div className="fodder">
+      
+		</div>
+    <div className="fodder"></div>
+    </>
+  )
 }
 
 export default App;
