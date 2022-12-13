@@ -10,13 +10,18 @@ import NavDropdown from 'react-bootstrap/NavDropdown'
 function MyNavbar() {
   return (
     <Navbar collapseOnSelect expand="lg">
-        <Navbar.Brand style={{marginLeft:30}} href="#home">
+        <Navbar.Brand style={{marginLeft:30}} bg="#f5f5f5" href="#home">
 			<img
 				src={require('./img/MemeIT.png')}
 				className="d-inline-block align-top"
 			/>
 		</Navbar.Brand>
-		<Navbar.Toggle aria-controls="basic-navbar-nav" />
+		<Navbar.Toggle aria-controls="basic-navbar-nav" >
+		<img
+				src={require('./img/menu.svg')}
+				
+			/>
+		</Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end ml-auto">
 			<Nav className="ml-auto">
 				<Nav.Link href="#home">Logare</Nav.Link>
@@ -25,26 +30,6 @@ function MyNavbar() {
         </Navbar.Collapse>
     </Navbar>
   );
-// 	return (
-// 	  <Navbar bg="light" expand="lg">
-// 		<Navbar.Brand href="#">
-// 		  <Image src="https://www.example.com/logo.png" width="30" height="30" />
-// 		</Navbar.Brand>
-// 		<Navbar.Toggle aria-controls="basic-navbar-nav" />
-// 		<Navbar.Collapse id="basic-navbar-nav">
-// 		  <Nav className="ml-auto">
-// 			<NavItem>
-// 			  <Nav.Link href="#">Login</Nav.Link>
-// 			</NavItem>
-// 			<NavItem>
-// 			  <Nav.Link href="#">Create account</Nav.Link>
-// 			</NavItem>
-// 		  </Nav>
-// 		</Navbar.Collapse>
-// 	  </Navbar>
-// 	);
-  
-
 }
 
 export default MyNavbar
