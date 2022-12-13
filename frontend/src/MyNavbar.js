@@ -2,10 +2,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import React from "react";
 
 import Nav from 'react-bootstrap/Nav'
-
+import Image from 'react-bootstrap/Image'
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown'
+
+
 
 function MyNavbar() {
   return (
@@ -16,11 +18,9 @@ function MyNavbar() {
 				className="d-inline-block align-top"
 			/>
 		</Navbar.Brand>
-		<Navbar.Toggle aria-controls="basic-navbar-nav" >
-		<img
-				src={require('./img/menu.svg')}
-				
-			/>
+		<Navbar.Toggle style={{borderColor:'#00000000'}} aria-controls="basic-navbar-nav" >
+		<Image src={require('./img/Vectormenu.png')}/>
+		{/* <div className='mymenu'/> */}
 		</Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end ml-auto">
 			<Nav className="ml-auto">
