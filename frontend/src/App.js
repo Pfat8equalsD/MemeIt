@@ -1,6 +1,6 @@
 import React from 'react';
 import MyNavbar from './MyNavbar';
-import "./App.css"
+// import "./App.css"
 
 function App() {
   return (
