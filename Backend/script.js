@@ -5,6 +5,10 @@ const mongoose = require('mongoose');
 const {User, Meme} = require('./Schemas');
 const bcrypt = require('bcrypt');
 const app = express();
+const multer  = require('multer')
+const upload = multer({ 
+	dest: 'uploads/'
+})
 
 app.use(express.json());
 
@@ -12,8 +16,18 @@ mongoose.connect("mongodb://localhost/testmemes").then();
 
 
 
-app.get('/', (req, res) =>{
-	res.json({message: "Hello"});
+app.post('/post/:id', verifyjwt, async (req, res, next)=>{
+	let user = await User.findOne({Username: req.username});
+	let meme = await Meme.findById(req.params.id)
+	if (user._id.toString() != meme.owner._id.toString())
+		return res.status(403).json({message:"You can only modify your memes"});
+	next()
+},upload.single('meme'), async (req, res) =>{
+	let meme = await Meme.findById(req.params.id);
+	await meme.update({
+		path: req.file
+	})
+	res.send({file: req.file})
 })
 
 app.post('/register', async (req, res) =>{
