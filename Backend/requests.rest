@@ -5,3 +5,8 @@ Content-Type: application/json
 	"username": "Marian sentiment",
 	"password": "Liga sentimentelor"
 }
+
+######
+
+POST http://localhost:3000/memes
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.TWFyaWFuIHNlbnRpbWVudA.Ff9SNAxZfQe05Tcv-XEuffMgnwvGt1nZpqhBSjkYb6I

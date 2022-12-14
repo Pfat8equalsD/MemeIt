@@ -35,4 +35,45 @@ app.post('/login', async (req, res) =>{
 	
 })
 
+
+
+app.get("/memes", (req, res) =>{
+	
+})
+
+app.get("/memes/:id", (req, res) =>{
+	const id = req.params.id;
+
+	
+})
+
+function verifyjwt(req,res,next){
+    const token = req.headers['authorization'].split(' ')[1];
+    if(!token) return res.status(401).json('Unauthorize user')
+
+   try{
+        const decoded = jwt.verify(token,process.env.PRIVATE_TOKEN);
+        req.username = decoded
+        next()
+
+   }catch(e){
+    res.status(400).json('Token not valid')
+   }
+}
+
+app.post("/memes", verifyjwt,(req, res) =>{
+	
+})
+
+
+
+app.patch("/memes/:id", verifyjwt,(req, res) =>{
+
+})
+
+app.delete("/memes/:id", verifyjwt, (req, res) =>{
+	
+})
+
+
 app.listen(3000);
