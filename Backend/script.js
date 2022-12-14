@@ -16,19 +16,7 @@ mongoose.connect("mongodb://localhost/testmemes").then();
 
 
 
-app.post('/post/:id', verifyjwt, async (req, res, next)=>{
-	let user = await User.findOne({Username: req.username});
-	let meme = await Meme.findById(req.params.id)
-	if (user._id.toString() != meme.owner._id.toString())
-		return res.status(403).json({message:"You can only modify your memes"});
-	next()
-},upload.single('meme'), async (req, res) =>{
-	let meme = await Meme.findById(req.params.id);
-	await meme.update({
-		path: req.file
-	})
-	res.send({file: req.file})
-})
+
 
 app.post('/register', async (req, res) =>{
 	errs = {};
@@ -138,7 +126,7 @@ function verifyjwt(req,res,next){
    }
 }
 
-app.post("/memes", verifyjwt, async (req, res) =>{
+app.post("/memes", verifyjwt, upload.none(), async (req, res) =>{
 	let user = await User.findOne({Username: req.username});
 	if(req.body.description.length > 2500)
 		return res.status(400).json({message:"Description must be below 2500 characters"})
@@ -155,7 +143,30 @@ app.post("/memes", verifyjwt, async (req, res) =>{
 	await user.save();
 })
 
-
+app.post('/memes', verifyjwt, async (req, res, next)=>{
+	let user = await User.findOne({Username: req.username});
+	let meme = await Meme.findById(req.params.id)
+	if (user._id.toString() != meme.owner._id.toString())
+		return res.status(403).json({message:"You can only modify your memes"});
+	next()
+},upload.single('meme'), async (req, res) =>{
+	let user = await User.findOne({Username: req.username});
+	if(req.body.description.length > 2500)
+		return res.status(400).json({message:"Description must be below 2500 characters"})
+	let meme = new Meme({
+		description: req.body.description,
+		owner: user._id,
+		path: req.file
+	})
+	await meme.save();
+	res.json({
+		description: meme.description,
+		id: meme._id.toString()
+	})
+	user.memes.push(meme._id);
+	await user.save();
+	res.send({file: req.file})
+})
 
 app.patch("/memes/:id", verifyjwt, async (req, res) =>{
 	let user = await User.findOne({Username: req.username});
