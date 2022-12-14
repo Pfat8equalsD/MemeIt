@@ -15,31 +15,12 @@ const userSchema = new Schema({
 	email: {
 		type: String,
 		required: true,
-		unique: true,
-		validate: [
-			{
-				validator: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test,
-				message: "the field must be a valid email"
-			},{
-				validator: /^.*@stud\.acs\.upb\.ro$/.test,
-				message: "the field must end in @stud.acs.upb.ro"
-			}
-		]
+		unique: true
 	},
 	Username: {
 		type: String,
 		required: true,
-		unique: true,
-		validate: [
-			{
-				validator: /^.{8,32}$/.test,
-				message: "the field is not between 8 and 32 characters"
-			},
-			{
-				validator: /^[\w ]+$/.test,
-				message: "the field must only contain letters, numbers, underscores or spaces"
-			}
-		]
+		unique: true
 	},
 	Password: {
 		type: String,
