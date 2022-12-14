@@ -2,11 +2,33 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-	"username": "Marian sentiment",
-	"password": "Liga sentimentelor"
+	"username": "Marian sentimen",
+	"password": "wejh32qwk"
 }
 
 ######
 
-POST http://localhost:3000/memes
+GET  http://localhost:3000/memes
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.TWFyaWFuIHNlbnRpbWVudA.Ff9SNAxZfQe05Tcv-XEuffMgnwvGt1nZpqhBSjkYb6I
+Content-Type: application/json
+
+{
+	"description" : "Lol"
+}
+
+#####
+
+DELETE http://localhost:3000/memes/639a28d0aeeb598d4479d62d
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.TWFyaWFuIHNlbnRpbWVudA.Ff9SNAxZfQe05Tcv-XEuffMgnwvGt1nZpqhBSjkYb6I
+
+
+#####
+POST http://localhost:3000/register
+Content-Type: application/json
+
+{
+	"email" : "lol@stud.acs.upb.ro",
+	"password": "wejh32qwk",
+	"username": "Marian sentimen"
+}

@@ -94,8 +94,11 @@ app.post('/login', async (req, res) =>{
 
 
 
-app.get("/memes", (req, res) =>{
+app.get("/memes", async (req, res) =>{
+	const memes = await Meme.find()
+
 	
+	res.json(memes)
 })
 
 app.get("/memes/:id", async (req, res) =>{
@@ -108,9 +111,9 @@ app.get("/memes/:id", async (req, res) =>{
 })
 
 function verifyjwt(req,res,next){
-    const token = req.headers['authorization'].split(' ')[1];
-    if(!token) return res.status(401).json('Unauthorize user')
-
+    let token = req.headers['authorization'];
+    if(!token) return res.status(401).json({message: "You must be logged in to access these fields"})
+	token = token.split(' ')[1]
    try{
         const decoded = jwt.verify(token,process.env.PRIVATE_TOKEN);
         req.username = decoded
@@ -136,17 +139,43 @@ app.post("/memes", verifyjwt, async (req, res) =>{
 	})
 	user.memes.push(meme._id);
 	await user.save();
-	console.log(user.memes);
 })
 
 
 
-app.patch("/memes/:id", verifyjwt,(req, res) =>{
-
+app.patch("/memes/:id", verifyjwt, async (req, res) =>{
+	let user = await User.findOne({Username: req.username});
+	if(req.body.description.length > 2500)
+		return res.status(400).json({message:"Description must be below 2500 characters"})
+	let meme = await Meme.findById(req.params.id)
+	if (user._id.toString() != meme.owner._id.toString())
+		return res.status(403).json({message:"You can only modify your memes"});
+	await meme.update({
+		description: req.body.description
+	})
+	res.json({
+		description: meme.description,
+		id: meme._id.toString()
+	})
 })
 
-app.delete("/memes/:id", verifyjwt, (req, res) =>{
-	
+app.delete("/memes/:id", verifyjwt, async (req, res) =>{
+	let user = await User.findOne({Username: req.username});
+	let meme = await Meme.findById(req.params.id)
+	console.log(user._id.toString())
+	console.log(meme.owner._id.toString())
+	if (user._id.toString() != meme.owner._id.toString())
+		return res.status(403).json({message:"You can only delete your memes"})
+
+	await User.updateOne({Username:req.username},{
+			$pullAll: {
+				memes: [meme._id]
+			}
+		})
+	console.log(meme._id)
+	console.log((await User.findById(user._id)).memes)
+	await meme.remove()
+	res.json({message: "Deleted"})
 })
 
 
